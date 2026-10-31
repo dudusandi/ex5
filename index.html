@@ -1,37 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>EX5 Bypass</title>
+    <title>EX5 Bypass - Melhorado</title>
     <style>
         body { font-family: sans-serif; text-align: center; padding: 20px; background: #1a1a1a; color: #fff; }
-        button { display: block; padding: 25px; font-size: 22px; margin: 15px auto; width: 90%; background: #007bff; color: white; border: none; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        button { display: block; padding: 20px; font-size: 20px; margin: 15px auto; width: 90%; background: #007bff; color: white; border: none; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); cursor: pointer; }
         button:active { background: #0056b3; transform: scale(0.98); }
-        .planb { background: #28a745; }
-        .info { color: #ccc; font-size: 16px; margin-bottom: 30px; line-height: 1.5; }
+        .planb { background: #28a745; display: block; padding: 20px; border-radius: 15px; margin: 30px auto; width: 90%; font-size: 20px; text-align: center; cursor: pointer; }
+        .info { color: #ccc; font-size: 15px; margin-bottom: 20px; line-height: 1.5; }
+        #status { background: #222; border: 1px solid #444; padding: 15px; margin: 20px auto; width: 90%; border-radius: 10px; font-family: monospace; font-size: 13px; color: #ffeb3b; text-align: left; max-height: 140px; overflow-y: auto; }
     </style>
 </head>
 <body>
-    <h2>Instalação Direta (Bypass)</h2>
-    <p class="info">O script abaixo procura o arquivo aptoide.apk no seu Pendrive e força o Android a abrir a tela de instalação, ignorando o bloqueio do navegador.</p>
+    <h2>Instalação Direta (Bypass) - EX5</h2>
+    <p class="info">Tentativa de acesso via Intent e rotas USB. Acompanhe o status abaixo.</p>
     
+    <div id="status">Status: Pronto. Aguardando ação...</div>
+
     <button id="btn1">Tentar Caminho 1 (UDISK)</button>
     <button id="btn2">Tentar Caminho 2 (usb_storage)</button>
     <button id="btn3">Tentar Caminho 3 (usb1)</button>
     <button id="btn4">Tentar Caminho 4 (usbotg)</button>
     
-    <label class="planb" style="display:block; padding:25px; border-radius:15px; margin:30px auto; width:90%; font-size:22px; text-align:center;">
-        PLANO B: Abrir Menu Nativo
-        <input type="file" accept="application/vnd.android.package-archive,.apk" style="display:none;" id="filePicker">
+    <label class="planb">
+        PLANO B: Selecionar APK Manualmente
+        <input type="file" accept=".apk,application/vnd.android.package-archive" style="display:none;" id="filePicker">
     </label>
 
     <script>
-        // O navegador bloqueia links com ".apk" no código HTML.
-        // Nós enganamos ele montando o link via JavaScript DEPOIS que a página carrega.
+        const logBox = document.getElementById('status');
+        function log(msg) {
+            console.log(msg);
+            logBox.innerHTML += "<br>> " + msg;
+            logBox.scrollTop = logBox.scrollHeight;
+        }
+
         const pkgType = "application/vnd.android.package-archive";
         const fileName = "aptoide.apk"; 
 
-        // Mapeamento de todas as portas USB possíveis no Flyme Auto / Android
         const paths = [
             "/storage/UDISK/",
             "/storage/usb_storage/",
@@ -42,26 +49,38 @@
         ];
 
         function createIntent(path) {
-            // Formato do Android Intent para forçar a leitura de arquivo local
-            return "intent://" + path.substring(1) + fileName + "#Intent;scheme=file;type=" + pkgType + ";action=android.intent.action.VIEW;end";
+            const filePath = path + fileName;
+            log("Gerando intent para: " + filePath);
+            return "intent://" + filePath.replace("://", "") + "#Intent;scheme=file;type=" + pkgType + ";action=android.intent.action.VIEW;end";
         }
 
         const buttons = document.querySelectorAll('button');
         buttons.forEach((btn, index) => {
             if (paths[index]) {
-                // Injeta o link dinamicamente ao clicar para burlar o filtro estático do navegador
                 btn.onclick = function(e) {
                     e.preventDefault();
-                    window.location.href = createIntent(paths[index]);
+                    log("Botão " + (index + 1) + " clicado. Rota: " + paths[index]);
+                    try {
+                        const targetUrl = createIntent(paths[index]);
+                        log("Disparando redirecionamento...");
+                        window.location.href = targetUrl;
+                    } catch (err) {
+                        log("Erro: " + err.message);
+                    }
                 };
             } else {
                 btn.style.display = 'none';
             }
         });
 
-        // PLANO B: Tenta abrir o seletor de arquivos nativo do Android (SAF)
-        document.getElementById('filePicker').addEventListener('change', function() {
-            alert('Se o sistema permitiu selecionar o arquivo, o Android reconheceu o pacote. Verifique se a tela de instalação abriu.');
+        document.getElementById('filePicker').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                log("Arquivo selecionado: " + file.name + " (" + file.size + " bytes)");
+                alert('Arquivo reconhecido pelo navegador! Nota: O navegador pode não conseguir passá-lo direto para o instalador do sistema sem permissões avançadas.');
+            } else {
+                log("Nenhum arquivo selecionado.");
+            }
         });
     </script>
 </body>
