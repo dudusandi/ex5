@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>EX5 Installer</title>
+    <title>EX5 Bypass - Fullscreen</title>
     <style>
         * {
             margin: 0;
@@ -15,86 +15,140 @@
             width: 100vw;
             height: 100vh;
             overflow: hidden;
-            background: #000;
-            color: #fff;
-            font-family: Arial, sans-serif;
+            background: #1a1a1a;
+            font-family: sans-serif;
         }
         
-        #fullscreen-btn {
+        #start-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
             background: #1a1a1a;
-            border: none;
-            color: #fff;
-            font-size: 32px;
-            cursor: pointer;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            flex-direction: column;
             z-index: 1000;
         }
         
         #main-content {
             display: none;
-            padding: 40px;
+            padding: 20px;
             text-align: center;
+            height: 100vh;
+            overflow-y: auto;
         }
         
-        .install-btn {
-            display: block;
-            width: 100%;
-            padding: 30px;
-            margin: 20px 0;
-            font-size: 24px;
+        #fullscreen-btn {
+            padding: 40px 60px;
+            font-size: 28px;
             background: #007bff;
             color: white;
             border: none;
-            border-radius: 15px;
+            border-radius: 20px;
             cursor: pointer;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+            margin-bottom: 20px;
         }
         
-        .install-btn:active {
+        #fullscreen-btn:active {
             background: #0056b3;
+            transform: scale(0.95);
         }
         
-        .status {
-            margin-top: 20px;
-            font-size: 18px;
-            color: #aaa;
+        .subtitle {
+            color: #888;
+            font-size: 16px;
+            margin-top: 15px;
+        }
+        
+        h2 { 
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+        
+        button { 
+            display: block; 
+            padding: 20px; 
+            font-size: 18px; 
+            margin: 12px auto; 
+            width: 95%; 
+            background: #007bff; 
+            color: white; 
+            border: none; 
+            border-radius: 15px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); 
+            cursor: pointer; 
+        }
+        
+        button:active { 
+            background: #0056b3; 
+            transform: scale(0.98); 
+        }
+        
+        .planb { 
+            background: #28a745; 
+            display: block; 
+            padding: 20px; 
+            border-radius: 15px; 
+            margin: 20px auto; 
+            width: 95%; 
+            font-size: 18px; 
+            text-align: center; 
+            cursor: pointer; 
+        }
+        
+        .info { 
+            color: #ccc; 
+            font-size: 14px; 
+            margin-bottom: 20px; 
+            line-height: 1.5; 
+        }
+        
+        #status { 
+            background: #222; 
+            border: 1px solid #444; 
+            padding: 12px; 
+            margin: 15px auto; 
+            width: 95%; 
+            border-radius: 10px; 
+            font-family: monospace; 
+            font-size: 12px; 
+            color: #ffeb3b; 
+            text-align: left; 
+            max-height: 120px; 
+            overflow-y: auto; 
         }
     </style>
 </head>
 <body>
-    <!-- Botão inicial para pedir fullscreen -->
-    <button id="fullscreen-btn" onclick="enterFullscreen()">
-        <div style="font-size: 48px; margin-bottom: 20px;">📱</div>
-        <div>TOQUE PARA ENTRAR EM TELA CHEIA</div>
-        <div style="font-size: 16px; margin-top: 20px; color: #888;">
-            Isso vai esconder o menu do carro
-        </div>
-    </button>
-    
-    <!-- Conteúdo principal (só aparece após fullscreen) -->
+    <!-- Tela inicial com botão de fullscreen -->
+    <div id="start-screen">
+        <button id="fullscreen-btn" onclick="enterFullscreen()">
+            📱 ENTRAR EM TELA CHEIA
+        </button>
+        <div class="subtitle">Toque para esconder o menu do carro</div>
+    </div>
+
+    <!-- Conteúdo principal (mesmo do seu código original) -->
     <div id="main-content">
-        <h1 style="margin-bottom: 30px;">Instalador EX5</h1>
+        <h2>Instalação Direta (Bypass) - EX5</h2>
+        <p class="info">Tentativa de acesso via Intent e rotas USB. Acompanhe o status abaixo.</p>
         
-        <button class="install-btn" onclick="tryInstall('/storage/emulated/12/Android/data/com.vivaldi.browser.automotive/files/Download/aptoide.apk')">
-            Instalar Aptoide (Download Folder)
-        </button>
+        <div id="status">Status: Pronto. Aguardando ação...</div>
+
+        <button id="btn1">Tentar Caminho 1 (UDISK)</button>
+        <button id="btn2">Tentar Caminho 2 (usb_storage)</button>
+        <button id="btn3">Tentar Caminho 3 (usb1)</button>
+        <button id="btn4">Tentar Caminho 4 (usbotg)</button>
         
-        <button class="install-btn" onclick="tryInstall('/storage/UDISK/aptoide.apk')">
-            Instalar Aptoide (USB Drive)
-        </button>
-        
-        <button class="install-btn" onclick="tryInstall('/storage/emulated/0/Download/aptoide.apk')">
-            Instalar Aptoide (Download Padrão)
-        </button>
-        
-        <div class="status" id="status">Aguardando ação...</div>
+        <label class="planb">
+            PLANO B: Selecionar APK Manualmente
+            <input type="file" accept=".apk,application/vnd.android.package-archive" style="display:none;" id="filePicker">
+        </label>
     </div>
 
     <script>
@@ -103,7 +157,9 @@
             
             // Tenta múltiplos métodos de fullscreen
             if (elem.requestFullscreen) {
-                elem.requestFullscreen();
+                elem.requestFullscreen().catch(err => {
+                    console.log("Erro fullscreen:", err);
+                });
             } else if (elem.webkitRequestFullscreen) {
                 elem.webkitRequestFullscreen();
             } else if (elem.msRequestFullscreen) {
@@ -112,51 +168,64 @@
                 elem.mozRequestFullScreen();
             }
             
-            // Esconde o botão e mostra o conteúdo
-            document.getElementById('fullscreen-btn').style.display = 'none';
+            // Esconde tela inicial e mostra conteúdo
+            document.getElementById('start-screen').style.display = 'none';
             document.getElementById('main-content').style.display = 'block';
-            
-            document.getElementById('status').textContent = 'Fullscreen ativado! Agora clique em um botão de instalação.';
         }
-        
-        // Detecta quando fullscreen é ativado
-        document.addEventListener('fullscreenchange', function() {
-            if (document.fullscreenElement) {
-                console.log('Fullscreen ativado');
+
+        const logBox = document.getElementById('status');
+        function log(msg) {
+            console.log(msg);
+            logBox.innerHTML += "<br>> " + msg;
+            logBox.scrollTop = logBox.scrollHeight;
+        }
+
+        const pkgType = "application/vnd.android.package-archive";
+        const fileName = "aptoide.apk"; 
+
+        const paths = [
+            "/storage/UDISK/",
+            "/storage/usb_storage/",
+            "/storage/usb1/",
+            "/storage/usbotg/",
+            "/mnt/usb_storage/",
+            "/storage/emulated/0/UDISK/"
+        ];
+
+        function createIntent(path) {
+            const filePath = path + fileName;
+            log("Gerando intent para: " + filePath);
+            return "intent://" + filePath.replace("://", "") + "#Intent;scheme=file;type=" + pkgType + ";action=android.intent.action.VIEW;end";
+        }
+
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach((btn, index) => {
+            if (paths[index]) {
+                btn.onclick = function(e) {
+                    e.preventDefault();
+                    log("Botão " + (index + 1) + " clicado. Rota: " + paths[index]);
+                    try {
+                        const targetUrl = createIntent(paths[index]);
+                        log("Disparando redirecionamento...");
+                        window.location.href = targetUrl;
+                    } catch (err) {
+                        log("Erro: " + err.message);
+                    }
+                };
             } else {
-                console.log('Fullscreen desativado');
+                btn.style.display = 'none';
             }
         });
-        
-        function tryInstall(filePath) {
-            const status = document.getElementById('status');
-            status.textContent = 'Tentando: ' + filePath;
-            
-            // Extrai o caminho sem a barra inicial para o intent
-            const pathWithoutSlash = filePath.substring(1);
-            
-            // Monta o intent
-            const intent = 'intent://' + pathWithoutSlash + '#Intent;scheme=file;type=application/vnd.android.package-archive;action=android.intent.action.VIEW;end';
-            
-            console.log('Disparando intent:', intent);
-            
-            try {
-                window.location.href = intent;
-                status.textContent = 'Intent disparado: ' + filePath;
-            } catch (e) {
-                status.textContent = 'Erro: ' + e.message;
+
+        document.getElementById('filePicker').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                log("Arquivo selecionado: " + file.name + " (" + file.size + " bytes)");
+                alert('Arquivo reconhecido pelo navegador! Nota: O navegador pode não conseguir passá-lo direto para o instalador do sistema sem permissões avançadas.');
+            } else {
+                log("Nenhum arquivo selecionado.");
             }
-            
-            // Tenta também com window.open
-            setTimeout(() => {
-                try {
-                    window.open(intent, '_blank');
-                    status.textContent += ' | window.open tentado';
-                } catch (e) {
-                    status.textContent += ' | window.open falhou';
-                }
-            }, 500);
-        }
+        });
     </script>
 </body>
 </html>
