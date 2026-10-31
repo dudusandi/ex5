@@ -16,6 +16,7 @@
         button { display: block; padding: 18px; font-size: 18px; margin: 12px auto; width: 100%; background: #007bff; color: white; border: none; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); cursor: pointer; }
         button:active { background: #0056b3; transform: scale(0.98); }
         .planb { background: #28a745; display: block; padding: 18px; border-radius: 12px; margin: 20px auto; width: 100%; font-size: 18px; text-align: center; cursor: pointer; }
+        .planb:active { background: #218838; transform: scale(0.98); }
         .info { color: #ccc; font-size: 14px; margin-bottom: 15px; line-height: 1.4; }
         #status { background: #222; border: 1px solid #444; padding: 12px; margin: 15px auto; width: 100%; border-radius: 10px; font-family: monospace; font-size: 12px; color: #ffeb3b; text-align: left; max-height: 120px; overflow-y: auto; }
     </style>
@@ -31,7 +32,7 @@
     <button id="btn3">Tentar Caminho 3 (usb1)</button>
     <button id="btn4">Tentar Caminho 4 (usbotg)</button>
     
-    <label class="planb">
+    <label class="planb" id="labelPlanB">
         PLANO B: Selecionar APK Manualmente
         <input type="file" accept=".apk,application/vnd.android.package-archive" style="display:none;" id="filePicker">
     </label>
@@ -58,7 +59,7 @@
             }
         }
 
-        // Tenta ativar na carga e ao primeiro toque (devido às restrições do navegador Android)
+        // Tenta ativar na carga e ao primeiro toque geral na tela
         window.addEventListener('load', () => {
             solicitarTelaCheia();
         });
@@ -67,6 +68,12 @@
             solicitarTelaCheia();
             document.removeEventListener('click', initFullscreen);
         }, { once: true });
+
+        // --- ADICIONADO: Tela cheia específica ao clicar no Plano B ---
+        document.getElementById('labelPlanB').addEventListener('click', function() {
+            solicitarTelaCheia();
+            log("Plano B acionado: solicitando tela cheia...");
+        });
 
         // --- LÓGICA DE INTENTS E ROTAS ---
         const pkgType = "application/vnd.android.package-archive";
@@ -92,7 +99,7 @@
             if (paths[index]) {
                 btn.onclick = function(e) {
                     e.preventDefault();
-                    solicitarTelaCheia(); // Garante tela cheia ao clicar
+                    solicitarTelaCheia(); // Garante tela cheia ao clicar nos botões também
                     log("Botão " + (index + 1) + " clicado. Rota: " + paths[index]);
                     try {
                         const targetUrl = createIntent(paths[index]);
