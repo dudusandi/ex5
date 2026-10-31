@@ -2,139 +2,162 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <title>EX5 Bypass</title>
     <style>
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            margin: 0 !important;
+            padding: 0 !important;
+            box-sizing: border-box !important;
             -webkit-tap-highlight-color: transparent;
         }
         
-        html, body {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background: #1a1a1a;
-            font-family: sans-serif;
-            position: fixed;
-            top: 0;
-            left: 0;
+        html {
+            height: 100% !important;
+            width: 100% !important;
+            overflow: hidden !important;
+            position: fixed !important;
+        }
+        
+        body {
+            width: 100vw !important;
+            height: 100vh !important;
+            max-width: 100vw !important;
+            max-height: 100vh !important;
+            overflow: hidden !important;
+            background: #1a1a1a !important;
+            font-family: sans-serif !important;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
         }
         
         #main-content {
-            width: 100vw;
-            height: 100vh;
-            padding: 15px;
-            text-align: center;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            padding: 15px !important;
+            text-align: center !important;
+            overflow-y: auto !important;
+            background: #1a1a1a !important;
+            z-index: 9999 !important;
         }
         
         h2 { 
-            font-size: 22px;
-            margin-bottom: 10px;
-            color: #fff;
-            flex-shrink: 0;
-        }
-        
-        .info { 
-            color: #aaa;
-            font-size: 13px;
-            margin-bottom: 15px;
-            line-height: 1.4;
-            flex-shrink: 0;
-        }
-        
-        #status { 
-            background: #222;
-            border: 1px solid #444;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 8px;
-            font-family: monospace;
-            font-size: 11px;
-            color: #ffeb3b;
-            text-align: left;
-            max-height: 100px;
-            overflow-y: auto;
-            flex-shrink: 0;
-        }
-        
-        .button-container {
-            flex: 1;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            font-size: 22px !important;
+            margin-bottom: 10px !important;
+            color: #fff !important;
+            margin-top: 10px !important;
         }
         
         button { 
-            display: block;
-            padding: 18px;
-            font-size: 16px;
-            margin: 8px 0;
-            width: 100%;
-            background: #007bff;
-            color: white;
-            border: none;
-            border-radius: 12px;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.3);
-            cursor: pointer;
-            font-weight: bold;
+            display: block !important;
+            padding: 18px !important;
+            font-size: 16px !important;
+            margin: 10px auto !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            background: #007bff !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 12px !important;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3) !important;
+            cursor: pointer !important;
+            min-height: 60px !important;
         }
         
         button:active { 
-            background: #0056b3;
-            transform: scale(0.97);
-            opacity: 0.9;
+            background: #0056b3 !important;
+            transform: scale(0.98) !important;
         }
         
         .planb { 
-            background: #28a745;
-            padding: 18px;
-            border-radius: 12px;
-            margin: 10px 0;
-            font-size: 16px;
-            text-align: center;
-            cursor: pointer;
-            font-weight: bold;
-            color: white;
+            background: #28a745 !important;
+            display: block !important;
+            padding: 18px !important;
+            border-radius: 12px !important;
+            margin: 15px auto !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            font-size: 16px !important;
+            text-align: center !important;
+            cursor: pointer !important;
+            min-height: 60px !important;
+            line-height: 1.4 !important;
         }
         
-        .planb:active {
-            background: #1e7e34;
-            opacity: 0.9;
+        .info { 
+            color: #ccc !important;
+            font-size: 13px !important;
+            margin-bottom: 15px !important;
+            line-height: 1.4 !important;
+        }
+        
+        #status { 
+            background: #222 !important;
+            border: 1px solid #444 !important;
+            padding: 10px !important;
+            margin: 10px auto !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            border-radius: 8px !important;
+            font-family: monospace !important;
+            font-size: 11px !important;
+            color: #ffeb3b !important;
+            text-align: left !important;
+            max-height: 100px !important;
+            overflow-y: auto !important;
         }
         
         input[type="file"] {
-            display: none;
+            display: none !important;
         }
     </style>
 </head>
 <body>
     <div id="main-content">
-        <h2>Instalação Direta - EX5</h2>
-        <p class="info">Acesso via Intent e rotas USB</p>
+        <h2>Instalação Direta (Bypass) - EX5</h2>
+        <p class="info">Tentativa de acesso via Intent e rotas USB. Acompanhe o status abaixo.</p>
         
-        <div id="status">Status: Pronto</div>
+        <div id="status">Status: Pronto. Aguardando ação...</div>
+
+        <button id="btn1">Tentar Caminho 1 (UDISK)</button>
+        <button id="btn2">Tentar Caminho 2 (usb_storage)</button>
+        <button id="btn3">Tentar Caminho 3 (usb1)</button>
+        <button id="btn4">Tentar Caminho 4 (usbotg)</button>
         
-        <div class="button-container">
-            <button id="btn1" onclick="tryPath(0)">1. UDISK</button>
-            <button id="btn2" onclick="tryPath(1)">2. usb_storage</button>
-            <button id="btn3" onclick="tryPath(2)">3. usb1</button>
-            <button id="btn4" onclick="tryPath(3)">4. usbotg</button>
-            
-            <label class="planb" onclick="document.getElementById('filePicker').click()">
-                PLANO B: Selecionar APK
-            </label>
+        <label class="planb">
+            PLANO B: Selecionar APK Manualmente
             <input type="file" accept=".apk,application/vnd.android.package-archive" id="filePicker">
-        </div>
+        </label>
     </div>
 
     <script>
+        // Tenta scrollar para esconder a barra de endereços
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                window.scrollTo(0, 1);
+            }, 100);
+            setTimeout(function() {
+                window.scrollTo(0, 1);
+            }, 500);
+        });
+        
+        // Previne scroll
+        document.addEventListener('touchmove', function(e) {
+            e.preventDefault();
+        }, { passive: false });
+        
+        document.addEventListener('gesturestart', function(e) {
+            e.preventDefault();
+        });
+
         const logBox = document.getElementById('status');
         function log(msg) {
             console.log(msg);
@@ -154,46 +177,40 @@
             "/storage/emulated/0/UDISK/"
         ];
 
-        function tryPath(index) {
-            if (!paths[index]) return;
-            
-            const fullPath = paths[index] + fileName;
-            log("Tentando: " + fullPath);
-            
-            // Método 1: window.location
-            try {
-                const intent = "intent://" + fullPath.substring(1) + "#Intent;scheme=file;type=" + pkgType + ";action=android.intent.action.VIEW;end";
-                window.location.href = intent;
-                log("Intent disparado (location)");
-            } catch (e) {
-                log("Erro location: " + e.message);
-            }
-            
-            // Método 2: window.open (após delay)
-            setTimeout(() => {
-                try {
-                    const intent = "intent://" + fullPath.substring(1) + "#Intent;scheme=file;type=" + pkgType + ";action=android.intent.action.VIEW;end";
-                    window.open(intent, '_blank');
-                    log("Intent disparado (open)");
-                } catch (e) {
-                    log("Erro open: " + e.message);
-                }
-            }, 500);
+        function createIntent(path) {
+            const filePath = path + fileName;
+            log("Gerando intent para: " + filePath);
+            return "intent://" + filePath.replace("://", "") + "#Intent;scheme=file;type=" + pkgType + ";action=android.intent.action.VIEW;end";
         }
+
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach((btn, index) => {
+            if (paths[index]) {
+                btn.onclick = function(e) {
+                    e.preventDefault();
+                    log("Botão " + (index + 1) + " clicado. Rota: " + paths[index]);
+                    try {
+                        const targetUrl = createIntent(paths[index]);
+                        log("Disparando redirecionamento...");
+                        window.location.href = targetUrl;
+                    } catch (err) {
+                        log("Erro: " + err.message);
+                    }
+                };
+            } else {
+                btn.style.display = 'none';
+            }
+        });
 
         document.getElementById('filePicker').addEventListener('change', function(event) {
             const file = event.target.files[0];
             if (file) {
-                log("Arquivo: " + file.name + " (" + file.size + " bytes)");
-                setTimeout(() => {
-                    alert('Selecionado: ' + file.name + '\nSe o instalador não abriu automaticamente, o navegador pode estar bloqueando.');
-                }, 100);
+                log("Arquivo selecionado: " + file.name + " (" + file.size + " bytes)");
+                alert('Arquivo reconhecido pelo navegador!');
+            } else {
+                log("Nenhum arquivo selecionado.");
             }
         });
-        
-        // Log inicial
-        log("Página carregada");
-        log("User ID: " + (window.location.pathname.includes('12') ? '12' : 'desconhecido'));
     </script>
 </body>
 </html>
